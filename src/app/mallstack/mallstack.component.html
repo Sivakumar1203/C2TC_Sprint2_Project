@@ -1,0 +1,102 @@
+<div class="page-bg">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Mall Admin Management</h1>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card">
+    <form (ngSubmit)="submit()" #f="ngForm" class="form-grid">
+
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="admin.username"
+        placeholder="Username"
+        required
+        class="form-input"
+      />
+
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="admin.password"
+        placeholder="Password"
+        required
+        class="form-input"
+      />
+
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="admin.email"
+        placeholder="Email"
+        required
+        class="form-input"
+      />
+
+      <input
+        type="number"
+        name="loginAttempts"
+        [(ngModel)]="admin.loginAttempts"
+        placeholder="Login Attempts"
+        class="form-input"
+      />
+
+      <select
+        name="isActive"
+        [(ngModel)]="admin.isActive"
+        class="form-input"
+      >
+        <option [ngValue]="true">Active</option>
+        <option [ngValue]="false">Inactive</option>
+      </select>
+
+      <button type="submit" class="btn-primary" [disabled]="f.invalid">
+        {{ isEditMode ? 'Update' : 'Add' }}
+      </button>
+
+    </form>
+  </div>
+
+  <!-- Table Card -->
+  <div class="card table-card">
+
+    <table *ngIf="admins.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Login Attempts</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let a of admins">
+          <td>{{ a.mallAdminId }}</td>
+          <td>{{ a.username }}</td>
+          <td>{{ a.email }}</td>
+          <td>{{ a.loginAttempts }}</td>
+          <td>
+            <span class="status" [class.active]="a.isActive">
+              {{ a.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button class="btn-edit" (click)="edit(a)">Edit</button>
+            <button class="btn-delete" (click)="delete(a.mallAdminId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="admins.length === 0" class="empty-text">
+      No Mall Admins Found
+    </p>
+
+  </div>
+</div>
